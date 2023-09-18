@@ -1,0 +1,33 @@
+.data
+    prompt: .asciiz "Digite o valor do lado do quadrado: "
+    resultado_msg: .asciiz "A área do quadrado é: "
+
+.text
+    # Início do programa
+    main:
+        # Exibe a mensagem de prompt para o usuário
+        li $v0, 4
+        la $a0, prompt
+        syscall
+
+        # Lê o valor do lado do quadrado fornecido pelo usuário
+        li $v0, 5
+        syscall
+        move $t0, $v0  # Armazena o lado do quadrado em $t0
+
+        # Calcula a área do quadrado (lado * lado)
+        mul $t1, $t0, $t0
+
+        # Exibe a mensagem de resultado
+        li $v0, 4
+        la $a0, resultado_msg
+        syscall
+
+        # Exibe o resultado (área do quadrado)
+        move $a0, $t1
+        li $v0, 1
+        syscall
+
+        # Fim do programa
+        li $v0, 10
+        syscall

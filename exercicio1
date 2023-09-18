@@ -1,0 +1,27 @@
+.data
+    # Declaração das constantes
+    const1: .word 10
+    const2: .word 20
+    resultado: .word 0
+
+.text
+    # Início do programa
+    main:
+        # Carregando as constantes em registradores
+        lw $t0, const1    # Carrega const1 em $t0
+        lw $t1, const2    # Carrega const2 em $t1
+
+        # Soma as constantes
+        add $t2, $t0, $t1  # Soma $t0 e $t1 e armazena em $t2
+
+        # Armazena o resultado na variável resultado
+        sw $t2, resultado  # Armazena $t2 em resultado
+
+        # Imprime o resultado
+        li $v0, 4          # Código de syscall para imprimir string
+        la $a0, resultado  # Carrega o endereço de resultado em $a0
+        syscall
+
+        # Fim do programa
+        li $v0, 10         # Código de syscall para sair do programa
+        syscall

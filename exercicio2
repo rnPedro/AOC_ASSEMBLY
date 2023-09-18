@@ -1,0 +1,44 @@
+.data
+    prompt1: .asciiz "Digite o primeiro valor: "
+    prompt2: .asciiz "Digite o segundo valor: "
+    resultado_msg: .asciiz "O resultado da soma é: "
+
+.text
+    # Início do programa
+    main:
+        # Solicita ao usuário o primeiro valor
+        li $v0, 4
+        la $a0, prompt1
+        syscall
+
+        # Lê o primeiro valor inteiro fornecido pelo usuário
+        li $v0, 5
+        syscall
+        move $t0, $v0  # Armazena o primeiro valor em $t0
+
+        # Solicita ao usuário o segundo valor
+        li $v0, 4
+        la $a0, prompt2
+        syscall
+
+        # Lê o segundo valor inteiro fornecido pelo usuário
+        li $v0, 5
+        syscall
+        move $t1, $v0  # Armazena o segundo valor em $t1
+
+        # Soma os dois valores e armazena o resultado em $t2
+        add $t2, $t0, $t1
+
+        # Exibe a mensagem do resultado
+        li $v0, 4
+        la $a0, resultado_msg
+        syscall
+
+        # Exibe o resultado
+        li $v0, 1
+        move $a0, $t2
+        syscall
+
+        # Fim do programa
+        li $v0, 10
+        syscall

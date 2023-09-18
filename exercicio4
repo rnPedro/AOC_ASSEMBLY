@@ -1,0 +1,71 @@
+.data
+    prompt1: .asciiz "Digite o comprimento do primeiro lado: "
+    prompt2: .asciiz "Digite o comprimento do segundo lado: "
+    prompt3: .asciiz "Digite o comprimento do terceiro lado: "
+    equilatero_msg: .asciiz "O triângulo é equilátero."
+    isosceles_msg: .asciiz "O triângulo é isósceles."
+    escaleno_msg: .asciiz "O triângulo é escaleno."
+
+.text
+    # Início do programa
+    main:
+        # Solicita ao usuário os comprimentos dos lados
+        li $v0, 4
+        la $a0, prompt1
+        syscall
+
+        li $v0, 5
+        syscall
+        move $t0, $v0  # Armazena o comprimento do primeiro lado em $t0
+
+        li $v0, 4
+        la $a0, prompt2
+        syscall
+
+        li $v0, 5
+        syscall
+        move $t1, $v0  # Armazena o comprimento do segundo lado em $t1
+
+        li $v0, 4
+        la $a0, prompt3
+        syscall
+
+        li $v0, 5
+        syscall
+        move $t2, $v0  # Armazena o comprimento do terceiro lado em $t2
+
+        # Verifica o tipo de triângulo
+        beq $t0, $t1, isosceles_check
+        beq $t1, $t2, isosceles_check
+        beq $t0, $t2, isosceles_check
+
+        beq $t1, $t2, isosceles_end
+
+    isosceles_check:
+        beq $t0, $t1, equilatero_end
+        beq $t1, $t2, equilatero_end
+        beq $t0, $t2, equilatero_end
+
+        # Se não for equilátero nem isósceles, é escaleno
+        li $v0, 4
+        la $a0, escaleno_msg
+        syscall
+        j fim
+
+    equilatero_end:
+        # Se chegou aqui, é equilátero
+        li $v0, 4
+        la $a0, equilatero_msg
+        syscall
+        j fim
+
+    isosceles_end:
+        # Se chegou aqui, é isósceles
+        li $v0, 4
+        la $a0, isosceles_msg
+        syscall
+
+    fim:
+        # Fim do programa
+        li $v0, 10
+        syscall
